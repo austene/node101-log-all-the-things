@@ -10,7 +10,11 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "express": "^4.15.2"
+    "express": "^4.15.2",
+    "fs": "0.0.1-security",
+    "morgan": "^1.9.1",
+    "navigator": "^1.0.1",
+    "path": "^0.12.7"
   },
   "devDependencies": {
     "chai": "^4.0.2",
