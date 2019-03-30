@@ -6,18 +6,16 @@ const path = require('path');
 
 app.use((req, res, next) => {
 // write your logging code here 
-    var userAgent = req.headers['user-agent'];
+    var userAgent = req.headers['user-agent'].replace(',', '');
     var time = new Date().toISOString();
     var method = req.method;
     var resource = req.url;
     var version = 'HTTP/' + req.httpVersion; 
     var status = res.statusCode;
-    var loglineData = `\"${userAgent}\",\"${time}\",\"${method}\",\"${resource}\",\"${version}\",\"${status}\"`; 
-
-    console.log(__dirname);
+    var loglineData = `${userAgent},${time},${method},${resource},${version},${status}`; 
+    console.log(loglineData);
     fs.appendFile(path.join(__dirname, 'log.csv'), loglineData + '\n', (err) => {
         if (err) throw err;
-        console.log('wrote to log.csv');
     });
     next();
 });
@@ -32,21 +30,21 @@ app.get('/', (req, res) => {
 
 function csvJSON(csv){  //var csv is the CSV file with headers
     console.log('csv = ' + csv);
-    var lines=csv.split("\n");
-    console.log(lines[0]);
-    console.log(lines[1]);
+    var lines=csv.split('\n');
     var result = [];
-    var headers=lines[0].split(",");
+    var headers=lines[0].split(',');
     console.log(headers);
     for(var i=1;i<lines.length;i++){
         var obj = {};
-        var currentline=lines[i].splitCSV();
+    //    var currentline=lines[i].splitCSV();
+        var currentline = lines[i].split(',');
         if (currentline.length < headers.length) {
             continue;
         }
-        console.log('currentline = ' + currentline);
+    /*    console.log('currentline = ' + currentline);
         console.log('currentline.length =' + currentline.length);
         console.log('headers.length =' + headers.length);
+    */    
         for(var j=0;j<headers.length;j++){
             obj[headers[j]] = currentline[j];
         }
@@ -56,7 +54,7 @@ function csvJSON(csv){  //var csv is the CSV file with headers
     return result; //JavaScript object
     
 };
-
+/*
 String.prototype.splitCSV = function(sep) {
     for (var foo = this.split(sep = sep || ","), x = foo.length - 1, tl; x >= 0; x--) {
       if (foo[x].replace(/"\s+$/, '"').charAt(foo[x].length - 1) == '"') {
@@ -68,18 +66,15 @@ String.prototype.splitCSV = function(sep) {
       } else foo[x].replace(/""/g, '"');
     } 
     console.log('splitCSV = ' + foo);
-    console.log('splitCSV[3]' + foo[3]);
-    var a = ['a', 'b', 'c', 'd'];
-    console.log(a);
     return foo;
 };
-
+*/
 app.get('/logs', (req, res) => {
 // write your code to return a json object containing the log data here
     var csvLog = path.join(__dirname, 'log.csv');
     var csvData = fs.readFileSync(csvLog, 'utf8');  
         
-    res.send(csvJSON(csvData));
+    res.json(csvJSON(csvData));
 });
 
 module.exports = app;
