@@ -1,0 +1,5 @@
+{
+    "version": 2,
+    "name": "logs-all-things",
+    "builds": [{ "src": "**/*.js", "use": "@now/node" }]
+  }

@@ -1,4 +1,4 @@
-# node101-log-all-things
+# node101-log-all-the-things
 
 ## Purpose of Program
 Uses node to create a logger for GET requests and also expose an endpoint on the server via /logs retrieve the latest log data from the web.
@@ -24,4 +24,4 @@ $ npm run dev
 
 ## Now
 Deployed to NOW through URL
->https://
+>https://logs-all-things-ae2mbc0ry.now.sh
