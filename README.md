@@ -24,4 +24,4 @@ $ npm run dev
 
 ## Now
 Deployed to NOW through URL
->https://logs-all-things-ae2mbc0ry.now.sh
+>https://logs-all-things-gq4uc739p.now.sh
